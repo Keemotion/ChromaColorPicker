@@ -440,6 +440,13 @@ open class ChromaColorPicker: UIControl {
             self.sendActions(for: .valueChanged)
         }
     }
+
+    open func toggleColorMode() {
+        shouldPreventFeedbackLoop = true
+        colorToggleButton.toggleState()
+        togglePickerColorMode()
+        shouldPreventFeedbackLoop = false
+    }
     
   @objc open func togglePickerColorMode() {
         colorToggleButton.isEnabled = false // Lock
