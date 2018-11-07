@@ -46,6 +46,7 @@ open class ChromaColorPicker: UIControl {
     }
     
     open private(set) var currentColor = UIColor.red
+    private var shouldPreventFeedbackLoop = false
     open var supportsShadesOfGray: Bool = false {
         didSet {
             if supportsShadesOfGray {
@@ -148,6 +149,8 @@ open class ChromaColorPicker: UIControl {
     }
     
     open func adjustToColor(_ color: UIColor){
+        shouldPreventFeedbackLoop = true
+
         /* Apply saturation and brightness from previous color to current one */
         var saturation: CGFloat = 0.0
         var brightness: CGFloat = 0.0
@@ -179,6 +182,8 @@ open class ChromaColorPicker: UIControl {
         self.layoutHandle()
         self.layoutHandleLine()
         self.updateHexLabel()
+
+        shouldPreventFeedbackLoop = false
     }
     
     //MARK: - Handle Touches
@@ -431,7 +436,9 @@ open class ChromaColorPicker: UIControl {
     func updateCurrentColor(_ color: UIColor){
         currentColor = color
         addButton.color = color
-        self.sendActions(for: .valueChanged)
+        if shouldPreventFeedbackLoop == false {
+            self.sendActions(for: .valueChanged)
+        }
     }
     
   @objc open func togglePickerColorMode() {
