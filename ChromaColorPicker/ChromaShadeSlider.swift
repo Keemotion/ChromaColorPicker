@@ -163,7 +163,8 @@ open class ChromaShadeSlider: UIControl {
         
         
         //Update current value
-        currentValue = ((handleCenterX - handleWidth/2)/trackLayer.bounds.width - 0.5) * 2  //find current value between {-1,1} of the slider
+        currentValue = (((handleCenterX - handleWidth/2)/trackLayer.bounds.width - 0.5) * 2 * 1000).rounded() / 1000
+        //find current value between {-1,1} of the slider
         
         //Update handle color
         self.changeColorHue(to: currentColor)

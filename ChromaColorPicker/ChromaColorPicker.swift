@@ -166,7 +166,10 @@ open class ChromaColorPicker: UIControl {
         /* Update the angle and currentColor */
         currentAngle = angleForColor(newColor)
         currentColor = newColor
-        if brightness < 1.0 && saturation < 1.0 {
+        if modeIsGrayscale {
+            shadeSlider.primaryColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1)
+            shadeSlider.currentValue = brightness * 2 - 1
+        } else if brightness < 1.0 && saturation < 1.0 {
             /* Modifies the Shade Slider to handle adjusting to colors outside of the Chroma scope */
             shadeSlider.primaryColor = UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1)
             shadeSlider.currentValue = 0
